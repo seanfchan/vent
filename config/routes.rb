@@ -1,10 +1,16 @@
 Vent::Application.routes.draw do
 
+  get "users/new"
+
   root :to => "pages#home"
 
+  # Pages Controller
   match '/contact', :to => 'pages#contact'
   match '/about',   :to => 'pages#about'
   match '/help',    :to => 'pages#help'
+
+  # User Controller
+  match '/signup',  :to => 'users#new'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
