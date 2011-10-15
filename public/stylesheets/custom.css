@@ -133,3 +133,8 @@ td.sidebar {
   margin-bottom: -15px;
   
 }
+
+/* Sign up form */
+div.field, div.actions {
+  margin-bottom: 10px;
+}
