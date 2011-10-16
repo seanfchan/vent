@@ -1,6 +1,7 @@
 Vent::Application.routes.draw do
 
   resources :users
+  resources :sessions, :only => [:new, :create, :destroy]
 
   root :to => "pages#home"
 
@@ -11,6 +12,10 @@ Vent::Application.routes.draw do
 
   # User Controller
   match '/signup',  :to => 'users#new'
+
+  # Session Controller
+  match '/signin',  :to => 'sessions#new'
+  match '/signout', :to => 'sessions#destroy'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
