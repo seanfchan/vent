@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_filter :authenticate, :only => [:edit, :update]
+  before_filter :correct_user, :only => [:edit, :update]
 
   def show
     @user = User.find(params[:id])
@@ -42,6 +43,15 @@ private
     # flash[:notice] = 'Please sign in to access this page.'
     # The assignment above is included in the line below
      deny_access unless signed_in?
+  end
+
+  def correct_user
+    @user = User.find(params[:id])
+    unless (current_user?(@user))
+      redirect_to(root_path)
+      flash[:error] = 'Permission denied.'
+    end
+    # redirect_to(root_path), :flash => { :error => 'Permission denied' } unless current_user?(@user)
   end
 
 end
