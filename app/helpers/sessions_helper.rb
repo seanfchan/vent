@@ -43,6 +43,10 @@ module SessionsHelper
     session[:return_to] = nil
   end
 
+  def flash_permission_denied
+    flash[:error] = 'Permission denied!'
+  end
+
 private
 
   def user_from_remember_token

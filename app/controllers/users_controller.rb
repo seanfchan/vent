@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_filter :authenticate, :only => [:index, :edit, :update]
+  before_filter :authenticate, :only => [:index, :edit, :update, :destroy]
   before_filter :correct_user, :only => [:edit, :update]
+  before_filter :admin_user,   :only => [:destroy]
 
   def index
     @users = User.paginate(:page => params[:page])
@@ -29,18 +30,23 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user  = User.find(params[:id])
     @title = 'Edit user'
   end
 
   def update
-    @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
       redirect_to @user, :flash => { :success => 'Your profile has successfully been updated.' }
     else
       @title = 'Edit user'
       render 'edit'
     end
+  end
+
+  def destroy
+    user_to_delete = User.find(params[:id])
+    user_name = user_to_delete.name
+    user_to_delete.destroy
+    redirect_to users_path, :flash => { :success => "User #{user_name} deleted." }
   end
 
 private
@@ -54,9 +60,17 @@ private
     @user = User.find(params[:id])
     unless (current_user?(@user))
       redirect_to(root_path)
-      flash[:error] = 'Permission denied.'
+      flash_permission_denied
     end
     # redirect_to(root_path), :flash => { :error => 'Permission denied' } unless current_user?(@user)
+  end
+
+  def admin_user
+    user = User.find(params[:id])
+    if (!current_user.admin? || current_user?(user))
+      redirect_to(root_path)
+      flash_permission_denied
+    end
   end
 
 end

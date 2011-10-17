@@ -48,6 +48,22 @@ describe UsersController do
         response.should have_selector('a', :href => '/users?page=2',
                                            :content => 'Next')
       end
+
+      it 'should have delete links for admins' do
+        @user.toggle!(:admin)
+        other_user = User.all.second
+        get :index
+        response.should have_selector('a', :href => user_path(other_user),
+                                           :content => 'delete')
+      end
+
+      it 'should not have delete links for admins' do
+        other_user = User.all.second
+        get :index
+        response.should_not have_selector('a', :href => user_path(other_user),
+                                               :content => 'delete')
+      end
+
     end
   end
 
@@ -255,7 +271,53 @@ describe UsersController do
         response.should redirect_to(root_path)
       end
     end
+  end
 
+  describe "DELETE 'destroy'" do
+    before(:each) do
+      @user = Factory(:user)
+    end
+
+    describe 'as a non-signed-in user' do
+      it 'should deny access' do
+        delete :destroy, :id => @user
+        response.should redirect_to(signin_path)
+      end
+    end
+
+    describe 'as a non admin user' do
+      it 'should protect the action' do
+        test_sign_in(@user)
+        delete :destroy, :id => @user
+        flash[:error].should =~ /denied/i
+        response.should redirect_to(root_path)
+      end
+    end
+
+    describe 'as an admin user' do
+      before(:each) do
+        # Factories bypass atrr_accessible
+        @admin = test_sign_in(Factory(:user, :email => 'testing@test.us', :admin => true))
+      end
+
+      it 'should destroy the user' do
+        lambda do
+          delete :destroy, :id => @user
+        end.should change(User, :count).by(-1)
+      end
+
+      it 'should redirect to users index' do
+        delete :destroy, :id => @user
+        flash[:success].should =~ /deleted/i
+        response.should redirect_to(users_path)
+      end
+
+      it 'should not be able to delete itself' do
+        lambda do
+          delete :destroy, :id => @admin
+        end.should_not change(User, :count)
+      end
+    end
   end
 
 end

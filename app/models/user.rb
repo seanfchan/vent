@@ -8,10 +8,8 @@
 #  created_at         :datetime
 #  updated_at         :datetime
 #  encrypted_password :string(255)
-#
-# Indexes
-#
-#  index_users_on_email  (email) UNIQUE
+#  salt               :string(255)
+#  admin              :boolean         default(FALSE)
 #
 
 class User < ActiveRecord::Base
