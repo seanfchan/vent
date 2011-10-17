@@ -3,18 +3,10 @@
 <%= will_paginate %>
 
 <ul class="users">
-  # Some serious rails magic
-  <% render @users %>
-
-=being
-  This block is being substituted by that 1 line up there
-  Note: will_paginate needs to have the instance variable @users
-        as default parameters
   <% @users.each do |user|
     # <% render 'user', :user => user %>
     <%= render user %>
   <% end %>
-=end
 
 </ul>
 
