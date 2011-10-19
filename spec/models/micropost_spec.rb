@@ -35,4 +35,18 @@ describe Micropost do
       @micropost.user.should == @user
     end
   end
+
+  describe 'validations' do
+    it 'should the user id' do
+      Micropost.new(@attr).should_not be_valid
+    end
+
+    it 'should require a non blank content' do
+      @user.microposts.build(:content => '  ').should_not be_valid
+    end
+
+    it 'should reject content that is too long' do
+      @user.microposts.build(:content => 'a' * 201).should_not be_valid
+    end
+  end
 end
