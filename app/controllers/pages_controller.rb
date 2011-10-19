@@ -1,7 +1,10 @@
 class PagesController < ApplicationController
   def home
   	@title = "Home"
-    @ventpost = Ventpost.new if signed_in?
+    if signed_in?
+      @ventpost = Ventpost.new
+      @feed_items = current_user.feed.paginate(:page => params[:page])
+    end
   end
 
   def contact

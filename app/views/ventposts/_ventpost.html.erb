@@ -5,4 +5,12 @@
       Posted <%= time_ago_in_words(ventpost.created_at) %> ago.
     </span>
   </td>
+
+  <% if current_user?(ventpost.user) %>
+    <td>
+      <%= link_to 'delete', ventpost, :method => :delete,
+                                      :confirm => 'You sure?',
+                                      :title => "Delete #{ventpost.content}" %>
+    </td>
+  <% end %>
 </tr>
