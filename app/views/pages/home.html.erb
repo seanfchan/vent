@@ -1,6 +1,22 @@
+<% if signed_in? %>
+  <table class="front" summary="For sign-in users">
+    <tr>
+      <td class="main">
+        <h1 class="ventpost">Vent your heart out!</h1>
+          <%= render 'shared/ventpost_form' %>
+      </td>
+      <td class="sidebar round">
+        <%= render 'shared/user_info' %>
+      </td>
+    </tr>
+  </table>
+
+<% else %>
 <h1>Vent</h1>
 <p>
   This is the home page of Vent: For all your venting needs
 </p>
 
 <%= link_to "Sign up NOW!", signup_path, :class => "signup_button round" %>
+
+<% end %>

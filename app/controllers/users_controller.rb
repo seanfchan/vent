@@ -50,12 +50,6 @@ class UsersController < ApplicationController
   end
 
 private
-  def authenticate
-    # flash[:notice] = 'Please sign in to access this page.'
-    # The assignment above is included in the line below
-     deny_access unless signed_in?
-  end
-
   def correct_user
     @user = User.find(params[:id])
     unless (current_user?(@user))
