@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   # Define which attributes are accessible to the user
   attr_accessible :name, :email, :password, :password_confirmation
 
+  has_many :microposts, :dependent => :destroy 
+
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\Z/i
 
   validates :name,  :presence =>  true, 

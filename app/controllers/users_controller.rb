@@ -43,9 +43,8 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    user_to_delete = User.find(params[:id])
-    user_name = user_to_delete.name
-    user_to_delete.destroy
+    user_name = @user.name
+    @user.destroy
     redirect_to users_path, :flash => { :success => "User #{user_name} deleted." }
   end
 
@@ -66,8 +65,8 @@ private
   end
 
   def admin_user
-    user = User.find(params[:id])
-    if (!current_user.admin? || current_user?(user))
+    @user = User.find(params[:id])
+    if (!current_user.admin? || current_user?(@user))
       redirect_to(root_path)
       flash_permission_denied
     end
