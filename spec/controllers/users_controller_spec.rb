@@ -102,6 +102,26 @@ describe UsersController do
       response.should have_selector('td>a', :content  => user_path(@user),
                                             :href     => user_path(@user))
     end
+
+    it 'should show the users ventposts' do
+      mp1 = Factory(:ventpost, :user => @user, :content => 'Foo bar')
+      mp2 = Factory(:ventpost, :user => @user, :content => 'foo bar 2')
+      get :show, :id => @user
+      response.should have_selector('span.content', :content => mp1.content)
+      response.should have_selector('span.content', :content => mp2.content)
+    end
+
+    it 'should paginate ventposts' do
+        31.times { Factory(:ventpost, :user => @user, :content => 'FooBARbAzQUUx')}
+        get :show, :id => @user
+        response.should have_selector('div.pagination')
+    end
+
+    it 'should display the ventpost count' do
+      35.times { Factory(:ventpost, :user => @user, :content => 'FooBARbAzQUUx')}
+      get :show, :id => @user
+      response.should have_selector('td.sidebar', :content => @user.ventposts.count.to_s )
+    end
   end
 
   describe "GET 'new'" do

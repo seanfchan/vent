@@ -184,26 +184,26 @@ describe User do
     end
   end
 
-  # Micropost associations
-  describe  'micropost associations' do
+  # Ventpost associations
+  describe  'ventpost associations' do
     before(:each) do
       @user = User.create(@attr)
-      @mp1 = Factory(:micropost, :user => @user, :created_at => 1.day.ago)
-      @mp2 = Factory(:micropost, :user => @user, :created_at => 1.hour.ago)
+      @mp1 = Factory(:ventpost, :user => @user, :created_at => 1.day.ago)
+      @mp2 = Factory(:ventpost, :user => @user, :created_at => 1.hour.ago)
     end
 
-    it 'should have a micropost attribute' do
-      @user.should respond_to(:microposts)
+    it 'should have a ventpost attribute' do
+      @user.should respond_to(:ventposts)
     end
 
-    it 'should have the right microposts in the right order' do
-      @user.microposts.should == [@mp2, @mp1]
+    it 'should have the right ventposts in the right order' do
+      @user.ventposts.should == [@mp2, @mp1]
     end
 
-    it 'destroy associated microposts' do
+    it 'destroy associated ventposts' do
       @user.destroy
-      [@mp1, @mp2].each do |micropost|
-        Micropost.find_by_id(micropost.id).should be_nil
+      [@mp1, @mp2].each do |ventpost|
+        Ventpost.find_by_id(ventpost.id).should be_nil
       end
     end
   end

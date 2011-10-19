@@ -5,11 +5,18 @@
         <%= gravatar_for @user %>
         <%= "#{@user.name}" %>
       </h1>
+      <% if @user.ventposts.any? %>
+        <table class="ventposts" summary="User ventposts">
+          <%= render @ventposts %>
+        </table>
+        <%= will_paginate @ventposts%>
+      <% end %>
     </td>
 
     <td class="sidebar round">
       <strong>Name</strong> <%= @user.name %><br />
       <strong>URL</strong> <%= link_to user_path(@user), @user %>
+      <strong>Vents</strong> <%= @user.ventposts.count %>
     </td>
   </tr>
 </table>

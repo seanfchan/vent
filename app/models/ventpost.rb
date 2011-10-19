@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: microposts
+# Table name: ventposts
 #
 #  id         :integer         not null, primary key
 #  content    :string(255)
@@ -9,14 +9,14 @@
 #  updated_at :datetime
 #
 
-class Micropost < ActiveRecord::Base
+class Ventpost < ActiveRecord::Base
+
   attr_accessible :content
 
   belongs_to :user
 
-  validates :content, :presence => true, :length => { :maximum => 140 }
+  validates :content, :presence => true, :length => { :maximum => 200 }
   validates :user_id, :presence => true
 
-  default_scope :order => 'microposts.created_at DESC'
-
+  default_scope :order => 'ventposts.created_at DESC'
 end
