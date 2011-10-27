@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   end
 
   def feed
-    Ventpost.where('user_id = ?', id)
+    Ventpost.from_users_followed_by(self)
   end
 
   def following?(followed)
