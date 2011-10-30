@@ -63,6 +63,7 @@ describe VentpostsController do
         response.should redirect_to(root_path)
       end
     end
+
     describe 'for an authorized user' do
       before(:each) do
         @user = test_sign_in(Factory(:user))
@@ -72,6 +73,33 @@ describe VentpostsController do
       it 'should allow access' do
         lambda do
           delete :destroy, :id => @ventpost
+          flash[:success].should =~ /deleted/i
+          response.should redirect_to(root_path)
+        end.should change(Ventpost, :count).by(-1)
+      end
+    end
+
+    describe 'for an admin' do
+      before(:each) do
+        @admin = Factory(:user)
+        @admin.toggle!(:admin)
+        test_sign_in(@admin)
+        @adminpost = Factory(:ventpost, :user => @admin)
+      end
+
+      it 'should allow the destroy of own vents' do
+        lambda do
+          delete :destroy, :id => @adminpost
+          flash[:success].should =~ /deleted/i
+          response.should redirect_to(root_path)
+        end.should change(Ventpost, :count).by(-1)
+      end
+
+      it "should allow the destroy of other user's vents" do
+        @reguser = Factory(:user, :email => Factory.next(:email))
+        @reguserpost = Factory(:ventpost, :user => @reguser)
+        lambda do
+          delete :destroy, :id => @reguserpost
           flash[:success].should =~ /deleted/i
           response.should redirect_to(root_path)
         end.should change(Ventpost, :count).by(-1)

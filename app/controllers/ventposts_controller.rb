@@ -20,6 +20,6 @@ class VentpostsController < ApplicationController
 private
   def authorize_user
     @ventpost = Ventpost.find(params[:id])
-    redirect_to root_path unless current_user?(@ventpost.user)
+    redirect_to root_path unless (current_user?(@ventpost.user) || current_user.admin?)
   end
 end

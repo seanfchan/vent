@@ -98,5 +98,27 @@ describe "LayoutLinks" do
       response.should have_selector('a', :href => users_path,
                                          :content => 'Users')
     end
+    
+    describe 'as admin' do
+      before(:each) do
+        @user.toggle!(:admin)
+        @user_vent = Factory(:ventpost, :user => @user)
+        second_user = Factory(:user, :email => Factory.next(:email))
+        @second_user_vent = Factory(:ventpost, :user => second_user)
+        @user.follow!(second_user)
+      end
+
+      it "should show delete link for admin's vents" do
+        visit root_path
+        response.should have_selector('a', :href => ventpost_path(@user_vent),
+                                           :content => 'delete')
+      end
+
+      it "should show delete link for other user's vents" do
+        visit root_path
+        response.should have_selector('a', :href => ventpost_path(@second_user_vent),
+                                           :content => 'delete')
+      end
+    end
   end
 end
