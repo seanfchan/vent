@@ -51,7 +51,7 @@ describe SessionsController do
 
       it 'should redirect to the users show page' do
         post :create, :session => @attr
-        response.should redirect_to(user_path(@user))
+        response.should redirect_to(root_path)
       end
     end
   end

@@ -52,6 +52,12 @@ describe "LayoutLinks" do
       response.should have_selector('a', :href => signin_path,
                                          :content => 'Sign in')
     end
+
+    it 'should have a home link' do
+      visit root_path
+      response.should have_selector('a', :href => root_path,
+                                         :content => 'Home')
+    end
   end
 
   describe 'when signed in' do
@@ -61,6 +67,12 @@ describe "LayoutLinks" do
       fill_in :email, :with => @user.email
       fill_in :password, :with => @user.password
       click_button
+    end
+
+    it 'should have a feed link' do
+      visit root_path
+      response.should have_selector('a', :href => root_path,
+                                         :content => 'Vent')
     end
 
     it 'should have a signout link' do
