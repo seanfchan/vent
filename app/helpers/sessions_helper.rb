@@ -40,8 +40,14 @@ module SessionsHelper
     session[:return_to] = request.fullpath
   end
 
-  def redirect_back_or(default)
+  def redirect_back_or(default, dict = nil)
     redirect_to(session[:return_to] || default)
+    if (!dict.nil?)
+      dict.each do |key , value|
+        flash[key] = value
+      end
+    end
+
     clear_return_to
   end
 

@@ -5,8 +5,7 @@ class VentpostsController < ApplicationController
   def create
     @ventpost = current_user.ventposts.build(params[:ventpost])
     if @ventpost.save
-      redirect_back_or root_path
-      flash[:success] = 'You vented successfully! :)'
+      redirect_back_or root_path, :success => 'You vented successfully! :)' 
       clear_return_to
     else
       @feed_items = []
