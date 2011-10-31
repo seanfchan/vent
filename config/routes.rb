@@ -12,6 +12,7 @@ Vent::Application.routes.draw do
   root :to => "pages#home"
 
   # Pages Controller
+  match '/dump',    :to => 'pages#dump'
   match '/contact', :to => 'pages#contact'
   match '/about',   :to => 'pages#about'
   match '/help',    :to => 'pages#help'

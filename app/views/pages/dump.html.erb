@@ -1,0 +1,11 @@
+<% if signed_in? %>
+  <table class="front" summary="For sign-in users">
+    <tr>
+      <td class="main">
+        <h1 class="ventpost">Speak your mind!</h1>
+          <%= render 'shared/ventpost_form' %>
+          <%= render 'shared/feed' %>
+      </td>
+    </tr>
+  </table>
+<% end %>

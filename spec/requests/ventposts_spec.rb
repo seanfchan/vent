@@ -50,4 +50,21 @@ describe "Ventposts" do
       end
     end
   end
+
+  describe 'dump page' do
+    before(:each) do
+      second_user = Factory(:user, :email => Factory.next(:email))
+      third_user = Factory(:user, :email => Factory.next(:email))
+
+      @second_user_vent = Factory(:ventpost, :user => second_user, :created_at => 2.hour.ago)
+      @third_user_vent = Factory(:ventpost, :user => third_user, :created_at => 1.hour.ago)
+      @user.follow!(second_user)
+    end
+
+    it 'should show all vents from all users based on created_at' do
+      visit dump_path
+      response.should have_selector('span.content', :content => @second_user_vent.content)
+      response.should have_selector('span.content', :content => @third_user_vent.content)
+    end
+  end
 end

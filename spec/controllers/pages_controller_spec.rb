@@ -37,7 +37,7 @@ describe PagesController do
       it 'should have the right title' do
         get :home
         response.should have_selector("title",
-                                      :content => "| Vent!")
+                                      :content => "| Feed")
       end
 
       it 'should have the right follower/following counts' do
@@ -86,6 +86,19 @@ describe PagesController do
       get 'help'
       response.should have_selector("title", 
                                     :content => "#{@base_title} | Help")
+    end
+  end
+
+  describe "GET 'dump'" do
+    it 'should be successful' do
+      get 'dump'
+      response.should be_success
+    end
+
+    it 'should have the right title' do
+      get 'dump'
+      response.should have_selector("title",
+                                    :content => "#{@base_title} | Dump")
     end
   end
 

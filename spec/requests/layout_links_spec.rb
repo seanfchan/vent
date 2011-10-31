@@ -69,10 +69,16 @@ describe "LayoutLinks" do
       click_button
     end
 
+    it 'should have a dump link' do
+      visit root_path
+      response.should have_selector('a', :href => dump_path,
+                                         :content => 'Dump')
+    end
+
     it 'should have a feed link' do
       visit root_path
       response.should have_selector('a', :href => root_path,
-                                         :content => 'Vent')
+                                         :content => 'Feed')
     end
 
     it 'should have a signout link' do
@@ -93,11 +99,11 @@ describe "LayoutLinks" do
                                           :content => 'Settings')
     end
 
-    it 'should ahve a users link' do
-      visit root_path
-      response.should have_selector('a', :href => users_path,
-                                         :content => 'Users')
-    end
+    # it 'should ahve a users link' do
+    #   visit root_path
+    #   response.should have_selector('a', :href => users_path,
+    #                                      :content => 'Users')
+    # end
     
     describe 'as admin' do
       before(:each) do
