@@ -37,7 +37,7 @@ describe "Ventposts" do
 
   describe 'vent post deletion' do
     before(:each) do
-      second_user = Factory(:user, :email => Factory.next(:email))
+      second_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
       @second_user_vent = Factory(:ventpost, :user => second_user)
       @user.follow!(second_user)
     end
@@ -53,8 +53,8 @@ describe "Ventposts" do
 
   describe 'dump page' do
     before(:each) do
-      second_user = Factory(:user, :email => Factory.next(:email))
-      third_user = Factory(:user, :email => Factory.next(:email))
+      second_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
+      third_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
 
       @second_user_vent = Factory(:ventpost, :user => second_user, :created_at => 2.hour.ago)
       @third_user_vent = Factory(:ventpost, :user => third_user, :created_at => 1.hour.ago)

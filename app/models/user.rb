@@ -27,10 +27,13 @@ class User < ActiveRecord::Base
   has_many :following, :through => :relationships, :source => :followed
   has_many :followers, :through => :reverse_relationships, :source => :follower
 
+  name_regex = /\A\A[\w]*[a-zA-Z\d]\Z/i
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\Z/i
 
-  validates :name,  :presence =>  true, 
-                    :length   =>  { :maximum => 50 }
+  validates :name,  :presence   =>  true, 
+                    :length     =>  { :within => 1..50 },
+                    :format     =>  { :with => name_regex },
+                    :uniqueness =>  { :case_sensitive => false }
 
   validates :email, :presence   =>  true,
                     :format     =>  { :with => email_regex },
@@ -64,7 +67,7 @@ class User < ActiveRecord::Base
 
   class << self
     def authenticate(email, submitted_password)
-      user = find_by_email(email)
+      user = find_by_email(email.downcase)
       (user && user.has_password?(submitted_password)) ? user : nil
     end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111021223751) do
+ActiveRecord::Schema.define(:version => 20111103015335) do
 
   create_table "relationships", :force => true do |t|
     t.integer  "follower_id"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20111021223751) do
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["name"], :name => "index_users_on_name", :unique => true
 
   create_table "ventposts", :force => true do |t|
     t.string   "content"

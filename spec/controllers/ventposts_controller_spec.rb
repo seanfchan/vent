@@ -53,7 +53,7 @@ describe VentpostsController do
     describe 'for an unauthorized user' do
       before(:each) do
         @user = Factory(:user)
-        wrong_user = Factory(:user, :email => Factory.next(:email))
+        wrong_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
         @ventpost = Factory(:ventpost, :user => @user)
         test_sign_in(wrong_user)
       end
@@ -96,7 +96,7 @@ describe VentpostsController do
       end
 
       it "should allow the destroy of other user's vents" do
-        @reguser = Factory(:user, :email => Factory.next(:email))
+        @reguser = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
         @reguserpost = Factory(:ventpost, :user => @reguser)
         lambda do
           delete :destroy, :id => @reguserpost

@@ -44,6 +44,18 @@ describe User do
     long_name_user.should_not be_valid
   end
 
+  it 'should reject duplicate names' do
+    User.create!(@attr)
+    same_user = User.new(@attr)
+    same_user.should_not be_valid
+  end
+
+  it 'should reject duplicate names up to case' do
+    User.create!(@attr)
+    same_user = User.new(@attr.merge(:name => @attr[:name].upcase))
+    same_user.should_not be_valid
+  end
+
   it 'should accept valid email addresses' do 
     addresses = %w[sean@foo.com DA_SEAN@foo.bar.org first.last@foo.jp]
     addresses.each do |address|
@@ -236,7 +248,7 @@ describe User do
     before(:each) do
       @user = User.create!(@attr)
       @followed = Factory(:user)
-      @follower = Factory(:user, :email => Factory.next(:email))
+      @follower = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
     end
 
     it 'should respond to the relationships method' do

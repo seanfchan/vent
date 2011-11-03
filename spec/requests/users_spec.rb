@@ -4,7 +4,7 @@ DatabaseCleaner.strategy = :truncation
 
 describe "Users" do
   describe 'sign up' do
-    describe 'failue' do
+    describe 'failure' do
       it 'should not make a new user' do
         lambda do
           visit signup_path

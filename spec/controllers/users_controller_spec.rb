@@ -14,11 +14,11 @@ describe UsersController do
     describe 'for signed-in users' do
       before(:each) do
         @user = test_sign_in(Factory(:user))
-        Factory(:user, :email => 'poo@pooball.com')
-        Factory(:user, :email => 'poo@poobal.net')
+        Factory(:user, :name => Factory.next(:name), :email => 'poo@pooball.com')
+        Factory(:user, :name => Factory.next(:name), :email => 'poo@poobal.net')
 
         30.times do
-          Factory(:user, :email => Factory.next(:email))
+          Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
         end
       end
 
@@ -125,7 +125,7 @@ describe UsersController do
 
     describe 'when signed in as another user' do
       it 'should be successful' do
-        test_sign_in(Factory(:user, :email => Factory.next(:email)))
+        test_sign_in(Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email)))
         get :show, :id => @user
         response.should be_success
       end
@@ -170,7 +170,7 @@ describe UsersController do
 
     describe 'success' do
       before (:each) do
-        @attr = { :name => 'New User', :email => 'user@example.com', 
+        @attr = { :name => 'NewUser', :email => 'user@example.com', 
                   :password => 'foobar', :password_confirmation => 'foobar' }
       end
 
@@ -187,7 +187,7 @@ describe UsersController do
 
       it 'show a welcome message' do
         post :create, :user => @attr
-        flash[:success].should =~ /welcome to vent/i
+        flash[:success].should =~ /welcome to protovent/i
       end
 
       it 'should sign the user in' do
@@ -244,12 +244,21 @@ describe UsersController do
 
     describe 'success' do
       before(:each) do
-        @attr = { :name => 'New name', :email => 'new@newname.com', 
+        @attr = { :name => 'Newname', :email => 'new@newname.com', 
                   :password => 'barbaz', :password_confirmation => 'barbaz' }
       end
 
       it 'should update the users attributes' do
         put :update, :id => @user, :user => @attr
+        user = assigns(:user)
+        @user.reload
+        @user.name.should == user.name
+        @user.email.should == user.email
+        @user.encrypted_password.should == user.encrypted_password
+      end
+
+      it "should update the user's attributes with the same name" do
+        put :update, :id => @user, :user => @attr.merge(:name => @user.name.upcase)
         user = assigns(:user)
         @user.reload
         @user.name.should == user.name
@@ -284,7 +293,7 @@ describe UsersController do
 
     describe 'for signed-in users' do
       before(:each) do
-        wrong_user = Factory(:user, :email => 'poo@poobals.com')
+        wrong_user = Factory(:user, :name => Factory.next(:name), :email => 'poo@poobals.com')
         test_sign_in(wrong_user)
       end
 
@@ -325,7 +334,7 @@ describe UsersController do
     describe 'as an admin user' do
       before(:each) do
         # Factories bypass atrr_accessible
-        @admin = test_sign_in(Factory(:user, :email => 'testing@test.us', :admin => true))
+        @admin = test_sign_in(Factory(:user, :name => Factory.next(:name), :email => 'testing@test.us', :admin => true))
       end
 
       it 'should destroy the user' do
@@ -364,7 +373,7 @@ describe UsersController do
     describe 'when sign in' do
       before(:each) do
         @user = test_sign_in(Factory(:user))
-        @other_user = Factory(:user, :email => Factory.next(:email))
+        @other_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
         @user.follow!(@other_user)
       end
 

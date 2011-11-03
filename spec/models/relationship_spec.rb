@@ -14,7 +14,7 @@ require 'spec_helper'
 describe Relationship do
   before(:each) do
     @follower = Factory(:user)
-    @followed = Factory(:user, :email => Factory.next(:email))
+    @followed = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
     @attr = { :followed_id => @followed.id }
   end
 

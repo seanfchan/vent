@@ -109,7 +109,7 @@ describe "LayoutLinks" do
       before(:each) do
         @user.toggle!(:admin)
         @user_vent = Factory(:ventpost, :user => @user)
-        second_user = Factory(:user, :email => Factory.next(:email))
+        second_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
         @second_user_vent = Factory(:ventpost, :user => second_user)
         @user.follow!(second_user)
       end

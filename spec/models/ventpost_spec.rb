@@ -52,8 +52,8 @@ describe Ventpost do
 
   describe 'from_users_followed_by' do
     before(:each) do
-      @second_user = Factory(:user, :email => Factory.next(:email))
-      @third_user = Factory(:user, :email => Factory.next(:email))
+      @second_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
+      @third_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
 
       @user_post = @user.ventposts.create!(:content => 'foo')
       @second_post = @second_user.ventposts.create!(:content => 'bar')
