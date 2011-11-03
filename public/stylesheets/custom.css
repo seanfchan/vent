@@ -123,7 +123,7 @@ td.main {
 
 td.sidebar {
   width: 30%;
-  padding: 1em;
+  padding: 0.5em;
   vertical-align: top;
   background: #ffc;
 }
@@ -195,6 +195,14 @@ h1.ventpost {
   margin-bottom: 0.3em;
 }
 
+#feedventform {
+  vertical-align: baseline;
+}
+
+#dumpventform {
+  vertical-align: baseline;
+}
+
 table.ventposts {
   margin-top: 1em;
 }
@@ -244,4 +252,10 @@ form.new_ventpost {
 form.new_ventpost textarea {
   height: 4em;
   margin-bottom: 0;
+}
+
+/* Ads */
+div.sidebarad {
+  padding-left: 1.1em;
+  padding-top: 1em;
 }
