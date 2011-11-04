@@ -22,10 +22,12 @@ class PagesController < ApplicationController
   end
 
   def dump
-    @title = "Dump"
-    @ventpost = Ventpost.new
-    @feed_items = Ventpost.paginate(:page => params[:page])
-    store_location
+    if signed_in?
+      @title = "Dump"
+      @ventpost = Ventpost.new
+      @feed_items = Ventpost.paginate(:page => params[:page])
+      store_location
+    end
   end
 
 end
