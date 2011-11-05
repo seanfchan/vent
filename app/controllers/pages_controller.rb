@@ -5,7 +5,6 @@ class PagesController < ApplicationController
       @title = "Feed"
       @ventpost = Ventpost.new
       @feed_items = current_user.feed.paginate(:page => params[:page])
-      store_location
     end
   end
 
@@ -26,7 +25,8 @@ class PagesController < ApplicationController
       @title = "Dump"
       @ventpost = Ventpost.new
       @feed_items = Ventpost.paginate(:page => params[:page])
-      store_location
+    else
+      deny_access
     end
   end
 

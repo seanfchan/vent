@@ -90,15 +90,52 @@ describe PagesController do
   end
 
   describe "GET 'dump'" do
-    it 'should be successful' do
-      get 'dump'
-      response.should be_success
+    # it 'should be successful' do
+    #   get 'dump'
+    #   response.should be_success
+    # end
+
+    # it 'should have the right title' do
+    #   get 'dump'
+    #   response.should have_selector("title",
+    #                                 :content => "#{@base_title} | Dump")
+    # end
+
+    describe 'when not signed in' do
+      it 'should not be successful' do
+        get 'dump'
+        response.should_not be_success
+      end
+
+      it 'should redirect to signin path' do
+        get 'dump'
+        response.should redirect_to(signin_path)
+      end
     end
 
-    it 'should have the right title' do
-      get 'dump'
-      response.should have_selector("title",
-                                    :content => "#{@base_title} | Dump")
+    describe 'when signed in' do
+      before(:each) do
+        @user = test_sign_in(Factory(:user))
+        @second_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
+        second_user_vent = Factory(:ventpost, :user => @second_user)
+        @third_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
+        third_user_vent = Factory(:ventpost, :user => @third_user)
+
+        @user.follow!(@second_user)
+      end
+
+      it 'should be successful' do
+        get 'dump'
+        response.should be_success
+      end
+
+      it 'should have vents of followed users and non followed users' do
+        get 'dump'
+        response.should have_selector('a', :href => user_path(@second_user),
+                                           :content => @second_user.name)
+        response.should have_selector('a', :href => user_path(@third_user),
+                                           :content => @third_user.name)
+      end
     end
   end
 
