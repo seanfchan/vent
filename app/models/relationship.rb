@@ -8,6 +8,11 @@
 #  created_at  :datetime
 #  updated_at  :datetime
 #
+# Indexes
+#
+#  index_relationships_on_follower_id  (follower_id)
+#  index_relationships_on_followed_id  (followed_id)
+#
 
 class Relationship < ActiveRecord::Base
   attr_accessible :followed_id

@@ -11,6 +11,11 @@
 #  salt               :string(255)
 #  admin              :boolean         default(FALSE)
 #
+# Indexes
+#
+#  index_users_on_name   (name) UNIQUE
+#  index_users_on_email  (email) UNIQUE
+#
 
 class User < ActiveRecord::Base
   attr_accessor   :password

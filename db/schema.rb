@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111103015335) do
+ActiveRecord::Schema.define(:version => 20111107044725) do
 
   create_table "relationships", :force => true do |t|
     t.integer  "follower_id"
@@ -43,5 +43,15 @@ ActiveRecord::Schema.define(:version => 20111103015335) do
   end
 
   add_index "ventposts", ["user_id"], :name => "index_ventposts_on_user_id"
+
+  create_table "votevents", :force => true do |t|
+    t.integer  "ventpost_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "votevents", ["user_id"], :name => "index_votevents_on_user_id"
+  add_index "votevents", ["ventpost_id"], :name => "index_votevents_on_ventpost_id"
 
 end

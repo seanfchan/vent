@@ -8,6 +8,10 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
+# Indexes
+#
+#  index_ventposts_on_user_id  (user_id)
+#
 
 require 'spec_helper'
 
