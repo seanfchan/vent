@@ -40,8 +40,19 @@ describe Ventpost do
     end
   end
 
+  describe 'votevents' do
+    before(:each) do
+      @ventpost = @user.ventposts.create(@attr)
+      @votevent = @ventpost.votevents.create(:ventpost_id => @ventpost.id)
+    end
+
+    it 'should have have a votevents method' do
+      @ventpost.should respond_to(:votevents)
+    end
+  end
+
   describe 'validations' do
-    it 'should the user id' do
+    it 'should have the user id' do
       Ventpost.new(@attr).should_not be_valid
     end
 

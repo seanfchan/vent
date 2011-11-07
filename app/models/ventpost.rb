@@ -19,6 +19,8 @@ class Ventpost < ActiveRecord::Base
 
   belongs_to :user
 
+  has_many :votevents, :dependent => :destroy
+
   validates :content, :presence => true, :length => { :maximum => 200 }
   validates :user_id, :presence => true
 

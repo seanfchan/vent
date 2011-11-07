@@ -17,5 +17,41 @@
 require 'spec_helper'
 
 describe Votevent do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before(:each) do
+    @user = Factory(:user)
+    @ventpost = Factory(:ventpost, :user => @user)
+    @attr = { :user_id => @user.id }
+  end
+
+  it 'should create a votevent' do
+    lambda do
+      @ventpost.votevents.create!(@attr)
+    end.should change(Votevent, :count).by(1)
+  end
+
+  describe 'validations' do
+    it 'should have the user id' do
+      Votevent.new(@attr).should_not be_valid
+    end
+
+    it 'should have the ventpost id' do
+      Votevent.new(:user_id => @user.id).should_not be_valid
+    end
+  end
+
+  describe 'ventpost associations' do
+    before(:each) do
+      @votevent = @ventpost.votevents.create!(@attr)
+    end
+
+    it 'should have a ventpost method' do
+      @votevent.should respond_to(:ventpost)
+    end
+
+    it 'should be associated with the right ventpost' do
+      @votevent.ventpost_id.should == @ventpost.id
+      @votevent.ventpost.should ==  @ventpost
+    end
+
+  end
 end
