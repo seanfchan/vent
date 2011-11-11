@@ -42,20 +42,29 @@ describe Ventpost do
 
   describe 'votevents' do
     before(:each) do
-      @ventpost = @user.ventposts.create(@attr)
-      @votevent = @user.votevents.create(:ventpost_id => @ventpost.id)
       @second_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
       @third_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
+      @ventpost = Factory(:ventpost, :user => @user)
+      @ventpost2 = Factory(:ventpost, :user => @second_user)
+      @votevent = @user.votevents.create(:ventpost_id => @ventpost.id)
       @votevent2 = @second_user.votevents.create(:ventpost_id => @ventpost.id)
-      @votevent3 = @third_user.votevents.create(:ventpost_id => @ventpost.id)
+      @votevent3 = @third_user.votevents.create(:ventpost_id => @ventpost2.id)
     end
 
-    it 'should have have a votevents method' do
+    it 'should have have a ventvotes method' do
       @ventpost.should respond_to(:ventvotes)
     end
 
+    it 'should ahve the right number of ventvotes' do
+      @ventpost.ventvotes.count.should == 2
+    end
+
     it 'should have the right ventvotes' do
-      @ventpost.ventvotes.should == [@votevent, @votevent2, @votevent3]
+      @ventpost.ventvotes.should == [@votevent, @votevent2]
+    end
+
+    it 'should not have ventpost with differnt id' do
+      @ventpost.ventvotes.should_not include(@votevent3)
     end
   end
 

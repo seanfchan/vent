@@ -297,5 +297,32 @@ describe User do
       @followed.followers.should include(@user)
     end
   end
+
+  describe 'votevents' do
+    before(:each) do
+      @user = Factory(:user)
+      @second_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
+      @third_user = Factory(:user, :name => Factory.next(:name), :email => Factory.next(:email))
+      @ventpost1 = @user.ventposts.create(:content => 'foobar1')
+      @ventpost2 = @user.ventposts.create(:content => 'foobar2')
+      @ventpost3 = @user.ventposts.create(:content => 'foobar3')
+      @votevent1 = @second_user.votevents.create!(:ventpost_id => @ventpost1.id)
+      @votevent2 = @second_user.votevents.create!(:ventpost_id => @ventpost2.id)
+      @votevent3 = @second_user.votevents.create!(:ventpost_id => @ventpost3.id)
+      @votevent4 = @third_user.votevents.create!(:ventpost_id => @ventpost3.id)
+    end
+
+    it 'should have have a votevents method' do
+      @user.should respond_to(:votevents)
+    end
+
+    it 'should have the right votevents' do
+      @second_user.votevents.should == [@votevent1, @votevent2, @votevent3]
+    end
+
+    it "should not include other user's votes" do
+      @second_user.votevents.should_not include(@votevent4)
+    end
+  end
 end
 
