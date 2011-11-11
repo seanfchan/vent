@@ -17,9 +17,12 @@ class Ventpost < ActiveRecord::Base
 
   attr_accessible :content
 
+  # User
   belongs_to :user
 
-  has_many :votevents, :dependent => :destroy
+  # relationship with the Votevents table, mainly to get counts
+  has_many :ventvotes, :dependent => :destroy,
+           :class_name => 'Votevent'
 
   validates :content, :presence => true, :length => { :maximum => 200 }
   validates :user_id, :presence => true

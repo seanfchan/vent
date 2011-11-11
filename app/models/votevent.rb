@@ -15,8 +15,9 @@
 #
 
 class Votevent < ActiveRecord::Base
-	attr_accessible :user_id
+	attr_accessible :ventpost_id
 
+  belongs_to :user
 	belongs_to :ventpost
 
 	validates :ventpost_id, :presence => true

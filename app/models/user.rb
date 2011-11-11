@@ -23,7 +23,10 @@ class User < ActiveRecord::Base
   # Define which attributes are accessible to the user
   attr_accessible :name, :email, :password, :password_confirmation
 
+  # Ventposts
   has_many :ventposts, :dependent => :destroy
+
+  # Relationships
   has_many :relationships, :dependent => :destroy,
                            :foreign_key => 'follower_id'
   has_many :reverse_relationships, :dependent =>:destroy,
@@ -32,9 +35,14 @@ class User < ActiveRecord::Base
   has_many :following, :through => :relationships, :source => :followed
   has_many :followers, :through => :reverse_relationships, :source => :follower
 
+  # Votevents
+  has_many :votevents, :dependent => :destroy
+
+  # Regexes, as if the variables were not descriptive enough
   name_regex = /\A\A[\w]*[a-zA-Z\d]\Z/i
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\Z/i
 
+  # Validations
   validates :name,  :presence   =>  true, 
                     :length     =>  { :within => 1..50 },
                     :format     =>  { :with => name_regex },
