@@ -5,9 +5,11 @@ Vent::Application.routes.draw do
       get :following, :followers
     end
   end
+
   resources :sessions, :only => [:new, :create, :destroy]
   resources :ventposts, :only => [:create, :destroy]
   resources :relationships, :only => [:create, :destroy]
+  resources :votevents, :only => [:create]
 
   root :to => "pages#home"
 
