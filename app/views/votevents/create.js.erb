@@ -1,0 +1,2 @@
+$("upvoteicon#{@ventpost.id}").update("")
+$("upvotecount#{@ventpost.id}").update("<%= pluralize(@ventpost.ventvotes.count, 'vote') %>")

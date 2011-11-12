@@ -10,8 +10,8 @@
 #
 # Indexes
 #
-#  index_votevents_on_user_id      (user_id)
 #  index_votevents_on_ventpost_id  (ventpost_id)
+#  index_votevents_on_user_id      (user_id)
 #
 
 class Votevent < ActiveRecord::Base

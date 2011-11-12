@@ -12,13 +12,13 @@ namespace :db do
 end
 
 def make_users
-  admin = User.create!(:name => 'Eample User',
+  admin = User.create!(:name => 'EampleUser',
                          :email => 'example@gmail.com',
                          :password => 'foobar',
                          :password_confirmation => 'foobar')
   admin.toggle!(:admin)
   99.times do |n|
-    name = Faker::Name.name
+    name = "#{Faker::Name.first_name}#{Faker::Name.last_name}"
     email = "example-#{n+1}@gmail.jp"
     password = 'password'
     User.create!(:name => name,

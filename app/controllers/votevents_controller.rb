@@ -4,7 +4,11 @@ class VoteventsController < ApplicationController
 
   def create
     current_user.vote!(@ventpost)
-    redirect_to root_path
+
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.js
+    end
   end
 
 private 
