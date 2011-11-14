@@ -28,6 +28,7 @@ describe VoteventsController do
       it 'should not allow a user to vote on their own ventpost' do
         lambda do
           post :create, :ventpost_id => @ventpost
+          response.should redirect_to(root_path)
         end.should_not change(Votevent, :count)
       end
     end

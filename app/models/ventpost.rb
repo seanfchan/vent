@@ -31,6 +31,10 @@ class Ventpost < ActiveRecord::Base
 
   scope :from_users_followed_by, lambda { |user| followed_by(user) }
 
+  def voted?(user)
+    Votevent.where("ventpost_id = ? AND user_id = ?", self.id, user.id).any?
+  end
+
 private
   def self.followed_by(user)
     followed_ids = %(SELECT followed_id FROM relationships

@@ -14,7 +14,7 @@
     </span>
     
       <span class="votevent">
-        <% if (current_user != feed_item.user) && !(Votevent.where("ventpost_id = ? AND user_id = ?", feed_item.id, current_user.id)).any? %>
+        <% if (current_user != feed_item.user) && !feed_item.voted?(current_user) %>
           <div id=<%= "upvoteicon#{feed_item.id}" %>>
             <%= link_to upvote, votevents_path(:ventpost_id => feed_item), :method => :post, :remote => true %>
           </div>

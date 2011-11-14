@@ -390,10 +390,4 @@ describe UsersController do
       end
     end
   end
-
-  describe 'unfollow pages' do
-
-  end
-
-
 end

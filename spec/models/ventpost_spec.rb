@@ -51,8 +51,12 @@ describe Ventpost do
       @votevent3 = @third_user.votevents.create(:ventpost_id => @ventpost2.id)
     end
 
-    it 'should have have a ventvotes method' do
+    it 'should have a ventvotes method' do
       @ventpost.should respond_to(:ventvotes)
+    end
+
+    it 'should have a votes? method' do
+      @ventpost.should respond_to(:voted?)
     end
 
     it 'should ahve the right number of ventvotes' do

@@ -25,7 +25,8 @@ describe Votevent do
 
   it 'should create a votevent' do
     lambda do
-      @user.votevents.create!(@attr)
+      @user.vote!(@ventpost)
+      @ventpost.should be_voted(@user)
     end.should change(Votevent, :count).by(1)
   end
 
@@ -36,6 +37,11 @@ describe Votevent do
 
     it 'should have the user id' do
       Votevent.new(:user_id => @user.id).should_not be_valid
+    end
+
+    it 'should have double vote detection' do
+      @user.vote!(@ventpost)
+      Votevent.new(:ventpost_id => @ventpost.id, :user_id => @user.id).should_not be_valid
     end
   end
 
