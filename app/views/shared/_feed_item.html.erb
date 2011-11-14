@@ -14,14 +14,14 @@
     </span>
     
       <span class="votevent">
+        <div class="upvotecount" id=<%= "upvotecount#{feed_item.id}" %>>
+            <%= pluralize(feed_item.ventvotes.count, 'vote') %>
+        </div>
         <% if (current_user != feed_item.user) && !feed_item.voted?(current_user) %>
-          <div id=<%= "upvoteicon#{feed_item.id}" %>>
-            <%= link_to upvote, votevents_path(:ventpost_id => feed_item), :method => :post, :remote => true %>
+          <div class="upvoteicon" id=<%= "upvoteicon#{feed_item.id}" %>>
+            <%= link_to "Vote!", votevents_path(:ventpost_id => feed_item), :class => "upvotelink round", :method => :post, :remote => true %>
           </div>
         <% end %>
-        <div id=<%= "upvotecount#{feed_item.id}" %>>
-          <%= pluralize(feed_item.ventvotes.count, 'vote') %>
-        </div>
       </span>
   </td>
 

@@ -259,3 +259,27 @@ div.sidebarad {
   padding-left: 1em;
   padding-top: 1em;
 }
+
+/* Vote Vents */
+div.upvoteicon {
+  float: right;
+  width: 50px;
+  height: 25px;
+  margin-bottom: 2px;
+}
+
+div.upvotecount {
+  float: left;
+}
+
+a.upvotelink {
+  width: 50px;
+  height: 25px;
+  background: lightblue;
+  color: #fff;
+  padding: 5px 5px;
+}
+
+a.upvotelink:hover {
+  text-decoration: none;
+}

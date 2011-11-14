@@ -66,4 +66,18 @@ describe "Votevents" do
     response.should have_selector("div#upvotecount#{@ventpost3.id}",
                                     :content => "0 votes")
   end
+
+  it "should report the correct vote count" do
+    visit root_path
+    response.should have_selector("div#upvoteicon#{@ventpost2.id}")
+    response.should have_selector("div#upvotecount#{@ventpost2.id}")
+    response.should have_selector("div#upvotecount#{@ventpost2.id}",
+                                    :content => "0 votes")
+    @user.vote!(@ventpost2)
+    @third_user.vote!(@ventpost2)
+    visit root_path
+    response.should_not have_selector("div#upvoteicon#{@ventpost2.id}")
+    response.should have_selector("div#upvotecount#{@ventpost2.id}",
+                                    :content => "2 votes")
+  end
 end
