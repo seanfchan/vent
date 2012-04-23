@@ -3,7 +3,7 @@
 }
 
 body {
-  background: #cff;
+  background: #00BFFF;
 }
 
 header {
@@ -125,7 +125,7 @@ td.sidebar {
   width: 30%;
   padding: 0.5em;
   vertical-align: top;
-  background: #ffc;
+  background: #7FFFD4;
 }
 
 .profile img.gravatar {
