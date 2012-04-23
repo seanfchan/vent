@@ -3,23 +3,37 @@
 }
 
 body {
-  background: #00BFFF;
+  background: #78BF82;
 }
 
 header {
   padding-top: 20px;
+  margin-bottom: 140px;
 }
 
 header img {
   padding: 1em;
-  background: #fff;
+  background: #CFD96C;
+}
+
+header div.headerLogo{
+  height: 80px;
+  width: 322px;
+  padding: 15px 15px 15px 35px;
+  float:left;
+  display:block;
+  background-color: #EBD464;
+}
+
+header div.headerLogo h1, header div.headerLogo h3{
+  color: #09C;
 }
 
 section {
   margin-top: 1em;
   font-size: 120%;
   padding: 20px;
-  background: #fff;
+  background: #CFD96C;
 }
 
 section h1 {
@@ -46,7 +60,7 @@ a:visited {
 
 nav {
   float: right;
-  background: white;
+  background: #EBD464;
   padding: 0 0.7em;
   white-space: nowrap;
 }
@@ -125,7 +139,7 @@ td.sidebar {
   width: 30%;
   padding: 0.5em;
   vertical-align: top;
-  background: #7FFFD4;
+  background: #A4D17C;
 }
 
 .profile img.gravatar {
